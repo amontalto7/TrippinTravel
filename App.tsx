@@ -48,7 +48,7 @@ const App = () => {
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.tsx</Text> to change
                 this screen and then come back to see your edits.
-                TrippinMobile test.
+                TrippinMobile test CI.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
