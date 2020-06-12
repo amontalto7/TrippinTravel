@@ -28,14 +28,13 @@ import {
 
 import auth from '@react-native-firebase/auth';
 
-
 declare const global: {HermesInternal: null | {}};
 
 function App() {
   const user = auth().currentUser;
 
   if (!user) {
-    return <Text>Please login</Text>;
+    return <Text>Please login now!</Text>;
   }
 
   return <Text>Welcome {user.email}</Text>;
