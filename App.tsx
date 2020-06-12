@@ -8,7 +8,7 @@
  * @format
  */
 
-import React from 'react';
+import * as React from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -26,56 +26,70 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import auth from '@react-native-firebase/auth';
+
 declare const global: {HermesInternal: null | {}};
 
-const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.tsx</Text> to change
-                this screen and then come back to see your edits.
-                TrippinMobile CI test!
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+function App() {
+  const user = auth().currentUser;
+
+  if (!user) {
+    return <Text>Please login now!</Text>;
+  }
+
+  return <Text>Welcome {user.email}</Text>;
+}
+
+// const App = () => {
+//   const user = auth().currentUser;
+//   return (
+//     <>
+//       <StatusBar barStyle="dark-content" />
+//       <SafeAreaView>
+//         <ScrollView
+//           contentInsetAdjustmentBehavior="automatic"
+//           style={styles.scrollView}>
+//           <Header />
+//           {global.HermesInternal == null ? null : (
+//             <View style={styles.engine}>
+//               <Text style={styles.footer}>Engine: Hermes</Text>
+//             </View>
+//           )}
+//           <View style={styles.body}>
+//             <View style={styles.sectionContainer}>
+//               <Text style={styles.sectionTitle}>Step One</Text>
+//               <Text style={styles.sectionDescription}>
+//                 Edit <Text style={styles.highlight}>App.tsx</Text> to change
+//                 this screen and then come back to see your edits.
+//                 TrippinMobile CI test!
+//               </Text>
+//               <Text>Welcome {user.email}</Text>;
+//             </View>
+//             <View style={styles.sectionContainer}>
+//               <Text style={styles.sectionTitle}>See Your Changes</Text>
+//               <Text style={styles.sectionDescription}>
+//                 <ReloadInstructions />
+//               </Text>
+//             </View>
+//             <View style={styles.sectionContainer}>
+//               <Text style={styles.sectionTitle}>Debug</Text>
+//               <Text style={styles.sectionDescription}>
+//                 <DebugInstructions />
+//               </Text>
+//             </View>
+//             <View style={styles.sectionContainer}>
+//               <Text style={styles.sectionTitle}>Learn More</Text>
+//               <Text style={styles.sectionDescription}>
+//                 Read the docs to discover what to do next:
+//               </Text>
+//             </View>
+//             <LearnMoreLinks />
+//           </View>
+//         </ScrollView>
+//       </SafeAreaView>
+//     </>
+//   );
+// };
 
 const styles = StyleSheet.create({
   scrollView: {
