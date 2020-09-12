@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -7,37 +8,112 @@
  *
  * @format
  */
-
 import * as React from 'react';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
-  Text,
   StatusBar,
 } from 'react-native';
 
 import {
+  Container,
   Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
+  Title,
+  Left,
+  Right,
+  Button,
+  Body,
+  Content,
+  Text,
+  Card,
+  CardItem,
+} from 'native-base';
+import Icon from 'react-native-ionicons'
 import auth from '@react-native-firebase/auth';
 
 declare const global: {HermesInternal: null | {}};
 
-function App() {
-  const user = auth().currentUser;
+function HomeScreen({navigation}) {
+  return (
+    <Container>
+      <Header>
+        <Left>
+          <Button transparent onPress={() => navigation.openDrawer()}>
+            <Icon name="menu" />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Trippin Travel</Title>
+        </Body>
+        <Right />
+      </Header>
+      <Content padder>
+        <Card>
+          <CardItem>
+            <Body>
+              <Text>My trips</Text>
+            </Body>
+          </CardItem>
+        </Card>
+        <Button
+          full
+          rounded
+          dark
+          style={{marginTop: 10}}
+          onPress={() => navigation.navigate('Notifications')}>
+          <Text>Chat With People</Text>
+        </Button>
+        <Button
+          full
+          rounded
+          primary
+          style={{marginTop: 10}}
+          onPress={() => navigation.navigate('Notifications')}>
+          <Text>Goto Profiles</Text>
+        </Button>
+      </Content>
+      {/* <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+      /> */}
+    </Container>
+  );
+}
 
-  if (!user) {
-    return <Text>Please login now!</Text>;
-  }
+function NotificationsScreen({navigation}) {
+  return (
+    <Container>
+            <Button onPress={() => navigation.goBack()} title="Go back home" />
 
-  return <Text>Welcome {user.email}</Text>;
+    </Container>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+const App = () => {
+  // const user = auth().currentUser;
+
+  // if (!user) {
+  //   return <Text>Please login now!</Text>;
+  // }
+
+  // return <Text>Welcome! {user.email}</Text>;
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Vault" component={NotificationsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  )
 }
 
 // const App = () => {
@@ -90,44 +166,5 @@ function App() {
 //     </>
 //   );
 // };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;
