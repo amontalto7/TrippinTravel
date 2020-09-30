@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 const PhrasesScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Currency Conversions</Text>
+      <Text>Common Phrases</Text>
     </View>
   );
 };

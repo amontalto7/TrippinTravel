@@ -1,15 +1,30 @@
-import React, { Component } from "react";
-import TripsScreen from "./TripsScreen.js";
-import SideBar from "../SideBar/SideBar.js";
-import { DrawerNavigator } from "react-navigation";
-const TripsScreenRouter = DrawerNavigator(
-  {
-    Home: { screen: TripsScreen },
-    Chat: { screen: MainScreenNavigator },
-    Profile: { screen: Profile }
+import React from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  {
-    contentComponent: props => <SideBar {...props} />
-  }
-);
-export default TripsScreenRouter;
+});
+
+const handleTrip = () => {
+  // TODO implement real sign up mechanism
+
+  setTripCity(true);
+};
+
+
+ 
+const TripsScreen = ({ navigation  }) => {
+  return (
+    <View style={styles.container}>
+      <Text>Protected Trips Screen</Text>
+      <Button title="New York" onPress={() => navigation.navigate('TripTabs')} />
+    </View>
+  );
+};
+ 
+export default TripsScreen;

@@ -15,23 +15,23 @@ import {
   getFocusedRouteNameFromRoute,
 } from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import { Button } from 'react-native';
+import {Button} from 'react-native';
 
 import LandingScreen from './screens/Landing';
-import Profile from './screens/Profile';
 import PasswordForgetScreen from './screens/PasswordForget';
 import PasswordChangeScreen from './screens/PasswordChange';
 import SignInScreen from './screens/SignIn';
 import SignUpScreen from './screens/SignUp';
-import HomeScreen from './screens/Home';
 import AccountScreen from './screens/Account';
+import TripsScreen from './screens/Trips';
+import HomeScreen from './screens/Home';
+import Profile from './screens/Profile';
 
 import auth from '@react-native-firebase/auth';
 declare const global: {HermesInternal: null | {}};
-
 
 const Tab = createBottomTabNavigator();
 
@@ -44,13 +44,13 @@ const HomeTabs = () => {
   );
 };
 
-
 const Drawer = createDrawerNavigator();
 
 const HomeDrawer = () => {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={HomeTabs} />
+      <Drawer.Screen name="Trips" component={TripsScreen} />
+      {/* <Drawer.Screen name="Home" component={HomeTabs}/> */}
       <Drawer.Screen name="Account" component={AccountScreen} />
       <Drawer.Screen name="Password Forget" component={PasswordForgetScreen} />
       <Drawer.Screen name="Password Change" component={PasswordChangeScreen} />
@@ -76,6 +76,7 @@ const App = () => {
   // return <Text>Welcome! {user.email}</Text>;
 
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [tripCity, setTripCity] = React.useState(false);
 
   const handleSignIn = () => {
     // TODO implement real sign in mechanism
@@ -100,24 +101,27 @@ const App = () => {
       {/* <RootStack.Navigator initialRouteName="Home">  */}
       <RootStack.Navigator>
         {isAuthenticated ? (
-          <RootStack.Screen
-            name="Home"
-            component={HomeDrawer}
-            options={({route, navigation}) => ({
-              headerTitle: getFocusedRouteNameFromRoute(route),
-              headerLeft: () => (
-                <Button
-                  onPress={() =>
-                    navigation.dispatch(DrawerActions.toggleDrawer())
-                  }
-                  title="Menu"
-                />
-              ),
-              headerRight: () => (
-                <Button onPress={handleSignOut} title="Sign Out" />
-              ),
-            })}
-          />
+          <>
+            <RootStack.Screen
+              name="Home"
+              component={HomeDrawer}
+              options={({route, navigation}) => ({
+                headerTitle: getFocusedRouteNameFromRoute(route),
+                headerLeft: () => (
+                  <Button
+                    onPress={() =>
+                      navigation.dispatch(DrawerActions.toggleDrawer())
+                    }
+                    title="Menu"
+                  />
+                ),
+                headerRight: () => (
+                  <Button onPress={handleSignOut} title="Sign Out" />
+                ),
+              })}
+            />
+            <RootStack.Screen name="TripTabs" component={HomeTabs} />
+          </>
         ) : (
           <>
             <RootStack.Screen
@@ -140,12 +144,14 @@ const App = () => {
               {(props) => <SignInScreen {...props} onSignIn={handleSignIn} />}
             </RootStack.Screen>
             <RootStack.Screen name="Sign Up">
-              {(props) => <SignUpScreen {...props} onSignIn={handleSignUp} />}
+              {(props) => <SignUpScreen {...props} onSignUp={handleSignUp} />}
             </RootStack.Screen>
             <RootStack.Screen
               name="Password Forget"
               component={PasswordForgetScreen}
             />
+            <RootStack.Screen name="Trips" component={TripsScreen} />
+            <RootStack.Screen name="TripTabs" component={HomeTabs} />
           </>
         )}
       </RootStack.Navigator>

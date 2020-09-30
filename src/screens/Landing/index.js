@@ -17,6 +17,11 @@ const LandingScreen = ({ navigation }) => {
         title="Go to Sign In"
         onPress={() => navigation.navigate('Sign In')}
       />
+      <Button
+        title="Try Trippin"
+        onPress={() => navigation.navigate('Trips')}
+      />
+
     </View>
   );
 };
