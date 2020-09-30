@@ -54,6 +54,9 @@
       "json",
       "node"
     ],
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
     "setupFilesAfterEnv": [
       "./__mocks__/mockFirebase.js"
     ]
